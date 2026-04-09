@@ -1,0 +1,55 @@
+import Image from "next/image";
+import { Button } from "./Button";
+import ScrollDownSvg from "./svg/scrollDownSvg";
+import rodro from "../assets/rodro.png";
+
+export const Hero = () => {
+  return (
+    <section className="relative min-h-[80vh] flex flex-col justify-center px-6 md:px-12 pt-20 pb-32">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="z-10">
+          <h1 className="text-[12vw] leading-[0.9] font-bold md:text-8xl lg:text-9xl mb-8 tracking-tighter">
+            CREATING <br />
+            DIGITAL <br />
+            <span className="bg-secondary px-4 inline-block">EXPERIENCE</span>
+            <br />
+            THROUGH <br />
+            CODE
+          </h1>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-12">
+            <div className="relative z-20">
+              <div className="bg-primary-text h-full absolute -bottom-1 -right-1 -z-10 w-full"></div>
+              <Button
+                size="md"
+                className="hidden sm:inline-flex bg-primary-text text-white"
+              >
+                VIEW PROJECTS
+              </Button>
+            </div>
+
+            <div className="flex items-center text-primary-text gap-2 text-base font-bold tracking-widest uppercase">
+              <ScrollDownSvg />
+              SCROLL TO EXPLORE
+            </div>
+          </div>
+        </div>
+
+        <div className="relative order-first lg:order-last flex justify-center lg:justify-end">
+          <div className="relative w-64 h-80 md:w-80 md:h-100 border-2 border-brand-dark brutalist-shadow bg-zinc-200">
+            <Image
+              src={rodro}
+              alt="Profile"
+              fill
+              className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              priority
+            />
+          </div>
+
+          {/* Decorative elements */}
+          <div className="absolute -top-4 -right-4 w-12 h-12 bg-brand-yellow brutalist-border -z-10 md:block hidden" />
+        </div>
+      </div>
+    </section>
+  );
+};
