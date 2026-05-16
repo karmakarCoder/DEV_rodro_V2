@@ -10,46 +10,8 @@ type HeroData = {
   description?: string;
 };
 
-const fetchHero = async (): Promise<HeroData> => {
-  const res = await axiosPublic.get<HeroData>("/hero");
-  return res.data;
-};
-
-const updateHero = async (payload: HeroData): Promise<HeroData> => {
-  const res = await axiosPublic.post<HeroData>("/hero", payload);
-  return res.data;
-};
-
 export const QuickEdit = () => {
-  const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery<HeroData>({
-    queryKey: ["hero"],
-    queryFn: fetchHero,
-  });
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  // Populate fields once data is fetched
-  useEffect(() => {
-    if (data) {
-      setTitle(data.title ?? "");
-      setDescription(data.description ?? "");
-    }
-  }, [data]);
-
-  const mutation = useMutation<HeroData, Error, HeroData>({
-    mutationFn: updateHero,
-    onSuccess: (newData) => {
-      queryClient.setQueryData(["hero"], newData);
-    },
-  });
-
-  const handleSubmit = () => {
-    if (!title.trim() && !description.trim()) return;
-    mutation.mutate({ title: title.trim(), description: description.trim() });
-  };
+  const handleSubmit = () => {};
 
   return (
     <div className="brutalist-border-thick bg-blue-600 text-primary p-6 brutalist-shadow-lg w-full md:w-80">
@@ -67,9 +29,6 @@ export const QuickEdit = () => {
           </label>
           <input
             type="text"
-            value={isLoading ? "Loading..." : title}
-            disabled={isLoading}
-            onChange={(e) => setTitle(e.target.value)}
             className="w-full bg-white text-primary-text p-2 brutalist-border text-xs font-bold outline-none uppercase disabled:opacity-50"
           />
         </div>
@@ -80,15 +39,12 @@ export const QuickEdit = () => {
           </label>
           <textarea
             rows={4}
-            value={isLoading ? "Loading..." : description}
-            disabled={isLoading}
-            onChange={(e) => setDescription(e.target.value)}
             className="w-full bg-white text-primary-text p-2 brutalist-border text-xs font-bold outline-none disabled:opacity-50"
           />
         </div>
 
         {/* Status feedback */}
-        {mutation.isSuccess && (
+        {/* {mutation.isSuccess && (
           <div className="flex items-center gap-2 text-xs font-bold">
             <CheckCircle2 size={14} />
             <span>Saved successfully!</span>
@@ -99,14 +55,14 @@ export const QuickEdit = () => {
             <AlertCircle size={14} />
             <span>Save failed. Check connection.</span>
           </div>
-        )}
+        )} */}
 
         <button
-          onClick={handleSubmit}
-          disabled={mutation.isPending || isLoading}
+          // onClick={handleSubmit}
+          // disabled={mutation.isPending || isLoading}
           className="w-full bg-secondary text-primary-text py-3 brutalist-border font-black tracking-widest disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {mutation.isPending ? "Saving..." : "SAVE CHANGES"}
+          SAVE CHANGES
         </button>
       </div>
     </div>

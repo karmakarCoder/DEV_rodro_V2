@@ -7,7 +7,7 @@ import path from "node:path";
 // PUT: Update Project
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectDB();
@@ -31,10 +31,8 @@ export async function PUT(
           .filter(Boolean)
       : undefined;
 
-    // Extract the image field (could be a fresh File binary or an existing string URL)
     const fileOrString = formData.get("image");
 
-    // Build our dynamic update payload object
     const updateData: any = {};
     if (name) updateData.name = name.trim();
     if (description) updateData.description = description.trim();
@@ -43,7 +41,6 @@ export async function PUT(
     updateData.live_url = live_url?.trim() || "";
     updateData.repo = repo?.trim() || "";
 
-    // 2. Process Image File if a fresh binary was sent
     if (
       fileOrString &&
       typeof fileOrString !== "string" &&
