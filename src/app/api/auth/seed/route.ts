@@ -16,10 +16,11 @@ export async function GET() {
       );
     }
 
-    const hashedPassword = await bcrypt.hash("admin123", 12);
+    const hashedPassword =
+      process.env.ADMIN_PASS && (await bcrypt.hash(process.env.ADMIN_PASS, 12));
 
     const admin = new User({
-      email: "admin@portfolio.os",
+      email: process.env.ADMIN_USER,
       password: hashedPassword,
       role: "admin",
     });
