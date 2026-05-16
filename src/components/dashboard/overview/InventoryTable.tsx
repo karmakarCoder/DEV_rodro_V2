@@ -4,35 +4,8 @@ import { Plus, Search } from "lucide-react";
 import { ProjectModal, ProjectData } from "../shared/ProjectModal";
 import { ProjectTable } from "../shared/ProjectTable";
 
-const initialProjects: ProjectData[] = [
-  {
-    id: "1",
-    name: "Nexus AI Landing",
-    status: "PRODUCTION",
-    stack: "Next.js, Three.js",
-  },
-  {
-    id: "2",
-    name: "Brutalist Dashboard",
-    status: "DRAFT",
-    stack: "Tailwind, React",
-  },
-  {
-    id: "3",
-    name: "Cyberpunk Editor",
-    status: "PRODUCTION",
-    stack: "Rust, WebAssembly",
-  },
-  {
-    id: "4",
-    name: "Vaporwave Store",
-    status: "STAGING",
-    stack: "Shopify, Hydrogen",
-  },
-];
-
 export const InventoryTable = () => {
-  const [data, setData] = useState<ProjectData[]>(initialProjects);
+  const [data, setData] = useState<ProjectData[]>();
   const [globalFilter, setGlobalFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<ProjectData | null>(
@@ -41,9 +14,9 @@ export const InventoryTable = () => {
 
   const handleSave = (project: ProjectData) => {
     if (editingProject) {
-      setData((prev) => prev.map((p) => (p.id === project.id ? project : p)));
+      setData((prev) => prev?.map((p) => (p.id === project.id ? project : p)));
     } else {
-      setData((prev) => [...prev, project]);
+      // setData((prev) => [...prev, project]);
     }
   };
 
@@ -87,13 +60,13 @@ export const InventoryTable = () => {
       </div>
 
       <ProjectTable
-        data={data}
+        data={data || []}
         globalFilter={globalFilter}
         onEdit={(p) => {
           setEditingProject(p);
           setIsModalOpen(true);
         }}
-        onDelete={(id) => setData((prev) => prev.filter((p) => p.id !== id))}
+        onDelete={(id) => setData((prev) => prev?.filter((p) => p.id !== id))}
       />
 
       <ProjectModal
