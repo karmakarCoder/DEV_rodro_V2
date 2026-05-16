@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Geist } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/provider/LenisProvider";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import TranstackProvider from "@/provider/TranstackProvider";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const SpaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -21,11 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${SpaceGrotesk.variable} antialiased`}>
+    <html lang="en" className={cn("antialiased", SpaceGrotesk.variable, "font-sans", geist.variable)}>
       <body className="min-h-full">
-        <Navbar />
-        <LenisProvider>{children}</LenisProvider>
-        <Footer />
+        <LenisProvider>
+          <TranstackProvider>{children}</TranstackProvider>{" "}
+        </LenisProvider>
       </body>
     </html>
   );
