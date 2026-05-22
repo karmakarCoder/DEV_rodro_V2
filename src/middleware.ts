@@ -23,23 +23,52 @@ export async function middleware(request: NextRequest) {
         },
       });
     }
-
-    // Set CORS origins for all outgoing standard API responses
-    const response = NextResponse.next();
-    response.headers.set("Access-Control-Allow-Origin", "*");
-    response.headers.set(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS",
-    );
-    response.headers.set(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization",
-    );
-    return response;
   }
 
   // ==========================================
-  // 2. ROUTE & AUTHENTICATION ACCESS CONTROLS
+  // 2. SYSTEM MAINTENANCE CHECK (NEW)
+  // ==========================================
+  // Bypass maintenance checks for the configuration endpoints and admin dashboards
+  const isBypassRoute =
+    pathname.startsWith("/api/admin") ||
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/_next") ||
+    pathname === "/maintenance" ||
+    pathname.includes(".");
+
+  if (!isBypassRoute) {
+    try {
+      // Fetch the maintenance status flag from your admin API
+      const res = await fetch(
+        `${request.nextUrl.origin}/api/admin/maintenance`,
+        {
+          next: { revalidate: 10 }, // Cache connection check for 10 seconds to optimize speed
+        },
+      );
+      const data = await res.json();
+
+      if (data?.isMaintenanceMode) {
+        // Handle API route blockages
+        if (pathname.startsWith("/api")) {
+          return NextResponse.json(
+            { error: "Service Unavailable", message: data.message },
+            {
+              status: 503,
+              headers: { "Access-Control-Allow-Origin": "*" }, // Retain CORS on 503 errors
+            },
+          );
+        }
+
+        // Handle Frontend Page route blockages (requires a page at app/maintenance/page.tsx)
+        return NextResponse.rewrite(new URL("/maintenance", request.url));
+      }
+    } catch (e) {
+      console.error("Maintenance check failed to fetch:", e);
+    }
+  }
+
+  // ==========================================
+  // 3. ROUTE & AUTHENTICATION ACCESS CONTROLS
   // ==========================================
   const token = request.cookies.get("token")?.value;
 
@@ -57,7 +86,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Redirect to dashboard if already logged in and trying to access login page
   if (pathname.startsWith("/login")) {
     if (token) {
       try {
@@ -69,12 +97,31 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  // ==========================================
+  // 4. SET GLOBAL CORS FOR STANDARD API RESPONSES
+  // ==========================================
+  const response = NextResponse.next();
+  if (pathname.startsWith("/api")) {
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS",
+    );
+    response.headers.set(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization",
+    );
+  }
+  return response;
 }
 
 // ==========================================
-// 3. UPDATED CONFIG MATCHER
+// 5. UPDATED CONFIG MATCHER
 // ==========================================
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/api/:path*"],
+  // Match all request paths except for the ones starting with:
+  // - _next/static (static files)
+  // - _next/image (image optimization files)
+  // - favicon.ico (favicon file)
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

@@ -14,7 +14,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="flex items-center justify-between px-6 py-6 md:px-12 border-b-[5px] bg-primary border-brand-dark bg-brand-cream sticky top-0 z-50">
+    <nav className="flex items-center justify-between px-6 py-6 md:px-12 border-b-[4px] bg-primary border-brand-dark bg-brand-cream sticky top-0 z-50">
       <div className="flex items-center gap-2 border-2 border-brand-dark px-3 py-1">
         <span className="font-black text-lg uppercase tracking-tighter">
           DEV_rodro_V1

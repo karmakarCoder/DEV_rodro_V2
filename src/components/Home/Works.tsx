@@ -123,7 +123,7 @@ export const Works = () => {
             ))}
 
         {/* "More on the way" card */}
-        <div className="border-2 border-brand-dark brutalist-shadow p-12 flex flex-col items-center justify-center text-center bg-zinc-100 border-dashed">
+        <div className="border-2  p-12 flex flex-col items-center justify-center text-center bg-zinc-100 border-dashed">
           <div className="w-16 h-16 border-2 border-brand-dark flex items-center justify-center mb-6">
             <span className="font-mono text-2xl font-bold">{"<>"}</span>
           </div>
