@@ -1,20 +1,20 @@
 import Image from "next/image";
 import { Button } from "../common/Button";
 import ScrollDownSvg from "../svg/scrollDownSvg";
-import rodro from "../../assets/rodro.png";
+import rodro from "../../assets/rodro.jpg";
 
 export const Hero = () => {
   return (
     <section className="relative min-h-[80vh] flex flex-col justify-center px-6 md:px-12 pt-20 pb-32">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="z-10">
-          <h1 className="text-[12vw] leading-[0.9] font-bold md:text-8xl mb-8 tracking-tighter">
-            CREATING <br />
-            DIGITAL <br />
-            <span className="bg-secondary px-4 inline-block">EXPERIENCE</span>
+          <h1 className="text-[12vw] leading-none font-bold uppercase md:text-8xl mb-8 tracking-tighter">
+            HEy👋
             <br />
-            THROUGH <br />
-            CODE
+            this is <br />
+            <span className="bg-secondary px-4 inline-block">your rodro</span>
+            <br />
+            karmakar <br />
           </h1>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-12">
