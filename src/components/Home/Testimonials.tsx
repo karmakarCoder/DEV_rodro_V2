@@ -35,7 +35,7 @@ export const Testimonials = () => {
       className="bg-[#E7483B] p-6 md:p-12 lg:p-20 border-b-2 lg:border-b-4 border-brand-dark"
     >
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 lg:mb-16 gap-4">
-        <h2 className="text-primary text-6xl font-bold leading-none uppercase tracking-tighter">
+        <h2 className="text-primary text-4xl hidden sm:block md:text-6xl font-bold leading-none uppercase tracking-tighter">
           TRANSMISSION_LOGS
         </h2>
         <div className="flex flex-col mb-2">

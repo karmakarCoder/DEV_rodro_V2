@@ -11,7 +11,7 @@ export const Works = () => {
   return (
     <section id="work" className="p-6 md:p-12">
       <div className="flex justify-between items-end mb-12">
-        <h2 className="text-6xl font-bold">SELECTED WORKS</h2>
+        <h2 className="text-5xl md:text-6xl font-bold">SELECTED WORKS</h2>
         <span className="text-xs font-heading font-bold underline cursor-pointer">
           V.2026 RELEASE
         </span>
