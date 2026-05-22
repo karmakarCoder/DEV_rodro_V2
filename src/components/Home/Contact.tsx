@@ -12,9 +12,9 @@ export const Contact = () => {
       id="contact"
       className="grid grid-cols-1 lg:grid-cols-2 border-t-2 border-brand-dark bg-brand-cream"
     >
-      <div className="p-8 md:p-20 flex flex-col justify-between min-h-125">
+      <div className="p-8 md:p-20 flex flex-col md:justify-between md:min-h-125">
         <div>
-          <h2 className="text-7xl md:text-[120px] font-bold leading-[0.85] mb-12">
+          <h2 className="text-5xl md:text-[120px] font-bold leading-[0.85] mb-12">
             LETS <br />
             BUILD <br />
             STUFF.

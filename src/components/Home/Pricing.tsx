@@ -51,7 +51,7 @@ export const Pricing = () => {
   return (
     <section className="p-6 md:p-12 lg:p-20 bg-primary border-b-2 lg:border-b-4 border-brand-dark">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 lg:mb-24 gap-4">
-        <h2 className="text-6xl font-bold leading-none uppercase tracking-tighter">
+        <h2 className="text-5xl md:text-6xl font-bold leading-none uppercase tracking-tighter">
           INVESTMENT
         </h2>
         <div className="flex flex-col mb-4">
@@ -82,11 +82,11 @@ export const Pricing = () => {
                 </span>
               )}
 
-              <h3 className="text-4xl font-bold mb-2 uppercase tracking-tight">
+              <h3 className="text-3xl md:text-4xl font-bold mb-2 uppercase tracking-tight">
                 {tier.title}
               </h3>
               <div className="font-bold mb-10 uppercase flex flex-col sm:flex-row sm:items-baseline">
-                <span className="text-6xl">
+                <span className="text-4xl md:text-6xl">
                   {tier.badge === "enterprise" ? "custome" : tier.price}
                 </span>
                 {tier.badge !== "enterprise" && (
